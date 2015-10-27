@@ -1,9 +1,8 @@
 ## Chess
 
-
 ##Description
 
-##Command line version of the classic board game, written in Ruby.
+Command line version of the classic board game, written in Ruby.
 
 ##Features
 
