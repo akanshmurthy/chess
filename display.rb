@@ -37,11 +37,11 @@ class Display
     # elsif @selected
     #   bg = :green
     elsif (i + j).odd?
-      bg = :light_blue
+      bg = :grey
     else
-      bg = :brown
+      bg = :white
     end
-    { background: bg, color: :white }
+    { background: bg, color: @board[i,j].color }
   end
 
   def render
