@@ -4,7 +4,7 @@ require_relative 'cursorable'
 
 class Display
   include Cursorable
-  attr_reader :cursor_pos, :selected, :selected_pos
+  attr_accessor :cursor_pos, :selected, :selected_pos, :board
   def initialize(board = Board.new)
     @board = board
     @cursor_pos = [0, 0]
@@ -47,36 +47,4 @@ class Display
     puts "Use arrow keys to move & space to select/drop."
     build_grid.each { |row| puts row.join }
   end
-
-  def play
-    loop do
-      @cursor_pos = pick_square
-        if @selected_pos.nil?
-          @selected_pos = @cursor_pos
-        else
-          current_color = @board[*@selected_pos].color
-          other_color = current_color == :white ? :black : :white
-          @board.move(@selected_pos, @cursor_pos)
-          if @board.in_check?(other_color)
-            puts "#{other_color} is in check."
-          end
-          if @board.checkmate?(other_color)
-            render
-            Kernel.abort("#{other_color} loses!")
-          end
-          @selected_pos = nil
-        end
-      render
-    end
-  end
-
-  def pick_square
-    result = nil
-    until result
-      self.render
-      result = self.get_input
-    end
-    result
-  end
-
 end
