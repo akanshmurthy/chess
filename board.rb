@@ -76,7 +76,6 @@ class Board
     threat = opponents_can_move(color, location)
     puts "#{color} is in check!" if threat
     threat
-    # PUTS RETURNS NIL - NEVER USE IT IF YOU WANT TO CHECK FOR BOOLEAN!!!!
   end
 
   def checkmate?(color)
@@ -84,13 +83,14 @@ class Board
       @grid.each_with_index do |row, i|
         row.each_with_index do |piece, j|
           next if piece.is_a?(EmptyPiece)
-          if piece.valid_moves.empty? && piece.color == color
-            return true
+          if !piece.valid_moves.empty? && piece.color == color
+            return false
           end
         end
       end
+      true
     end
-    false
+
   end
 
   def find_king(color)

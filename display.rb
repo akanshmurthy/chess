@@ -33,9 +33,6 @@ class Display
       else
         bg = :green
       end
-      # end
-    # elsif @selected
-    #   bg = :green
     elsif (i + j).odd?
       bg = :grey
     else
@@ -47,7 +44,7 @@ class Display
   def render
     system("clear")
     puts "Fill the grid!"
-    puts "Arrow keys, WASD, or vim to move, space or enter to confirm."
+    puts "Use arrow keys to move & space to select/drop."
     build_grid.each { |row| puts row.join }
   end
 
@@ -58,15 +55,14 @@ class Display
           @selected_pos = @cursor_pos
         else
           current_color = @board[*@selected_pos].color
-          # other_color = [:white, :black].reject do |color|
-          #   color == current_color
-          # end.first
           other_color = current_color == :white ? :black : :white
           @board.move(@selected_pos, @cursor_pos)
-          @board.in_check?(other_color)
+          if @board.in_check?(other_color)
+            puts "#{other_color} is in check."
+          end
           if @board.checkmate?(other_color)
             render
-            Kernel.abort("#{other_color} Loses!")
+            Kernel.abort("#{other_color} loses!")
           end
           @selected_pos = nil
         end
