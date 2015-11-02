@@ -43,12 +43,11 @@ class SlidingPiece < Piece
         next if i.zero?
         a = pos[0] + (el[0] * i)
         b = pos[1] + (el[1] * i)
-        if !@board.in_bounds?([a,b]) || @board[a,b].color == @color
-          break
-        elsif @board[a,b].is_a?(EmptyPiece)
+        break unless @board.in_bounds?([a,b])
+        if @board[a,b].is_a?(EmptyPiece)
           potential_moves << [a,b]
         else
-          potential_moves << [a,b]
+          potential_moves << [a,b] if @board[a,b].color != @color
           break
         end
       end
@@ -96,8 +95,11 @@ class SteppingPiece < Piece
     move_dirs.each do |el|
       a = pos[0] + el[0]
       b = pos[1] + el[1]
-      if @board.in_bounds?([a,b]) && !@board[a,b].color == @color
+      next unless @board.in_bounds?([a,b])
+      if @board[a,b].is_a?(EmptyPiece)
         potential_moves << [a,b]
+      else
+        potential_moves << [a,b] if @board[a,b].color != @color
       end
     end
     potential_moves
@@ -106,7 +108,7 @@ end
 
 class King < SteppingPiece
   def move_dirs
-    move_dirs = [[1,1],[1,-1],[-1,1],[-1,-1],[1,0],[-1,0],[0,1],[0,-1]]
+    move_dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
   end
 
   def to_s
@@ -171,18 +173,6 @@ class Pawn < Piece
     moves.select { |move| @board.in_bounds?(move) }
   end
 end
-
-# write Board#is_opponent?(pos, color)
-
-
-
-
-
-
-
-
-
-
 
 class EmptyPiece < Piece
   def to_s

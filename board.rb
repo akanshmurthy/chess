@@ -58,17 +58,14 @@ class Board
   end
 
   def move(start, end_pos)
-    # debugger
     if self[*start].valid_moves.include?(end_pos)
       self[*start].update_piece_pos(end_pos)
       self[*end_pos] = self[*start]
       self[*start] = EmptyPiece.new(self, start, :clear)
     else
-    #   raise EndPosError
-    # rescue EndPosError
       puts "Not a valid end position for this piece."
     end
-    # raise NoPieceError
+
   end
 
   def in_check?(color)

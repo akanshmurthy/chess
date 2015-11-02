@@ -47,4 +47,34 @@ class Display
     puts "Use arrow keys to move & space to select/drop."
     build_grid.each { |row| puts row.join }
   end
+
+  def play
+    loop do
+      @cursor_pos = pick_square
+        if @selected_pos.nil?
+          @selected_pos = @cursor_pos
+        else
+          current_color = @board[*@selected_pos].color
+          other_color = current_color == :white ? :black : :white
+          @board.move(@selected_pos, @cursor_pos)
+          @board.in_check?(other_color)
+          if @board.checkmate?(other_color)
+            render
+            Kernel.abort("#{other_color} Loses!")
+          end
+          @selected_pos = nil
+        end
+      render
+    end
+  end
+
+  def pick_square
+    result = nil
+    until result
+      self.render
+      result = self.get_input
+    end
+    result
+  end
+
 end
