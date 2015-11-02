@@ -5,9 +5,9 @@
 Command line version of the classic board game, written in Ruby.
 
 ##Features
--Allows players to navigate the board and select pieces with a cursor.
--Employs multilevel class inheritance for sliding, stepping, and pawn pieces.
--Performs custom move validations in a virtual board
+- Allows players to navigate the board and select pieces with a cursor.
+- Employs multilevel class inheritance for sliding, stepping, and pawn pieces.
+- Performs custom move validations in a virtual board
 
 ##Gameplay Instructions
 
