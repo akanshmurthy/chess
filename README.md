@@ -9,7 +9,7 @@ Command line version of the classic board game, written in Ruby.
 - Employs multilevel class inheritance for sliding, stepping, and pawn pieces.
 - Performs custom move validations in a virtual board.
 
-## Gameplay Instructions
+## Gameplay instructions
 
 Download this repository. CD into the directory. 
 Run the game.rb file on a terminal with the command: <code>$ ruby game.rb </code>.
