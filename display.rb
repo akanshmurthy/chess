@@ -10,6 +10,7 @@ class Display
     @cursor_pos = [0, 0]
     @selected = false
     @selected_pos = nil
+    @current_player = :white
   end
 
   def build_grid
@@ -43,9 +44,9 @@ class Display
 
   def render
     system("clear")
-    puts "Fill the grid!"
-    puts "Use arrow keys to move & space to select/drop."
     build_grid.each { |row| puts row.join }
+    game_info
+    instructions
   end
 
   def play
@@ -60,12 +61,23 @@ class Display
           @board.in_check?(other_color)
           if @board.checkmate?(other_color)
             render
-            Kernel.abort("#{other_color} Loses!")
+            Kernel.abort("Checkmate - #{other_color} loses!")
           end
           @selected_pos = nil
+          @current_player == :white ? @current_player = :black : @current_player = :white
         end
       render
     end
+  end
+
+  def game_info
+    puts "Cursor at: #{cursor_pos} "
+    puts "Current player: #{@current_player}"
+  end
+
+  def instructions
+    puts "___________________________________________"
+    puts "Instructions: Use arrow keys to move & space to select/drop. "
   end
 
   def pick_square
